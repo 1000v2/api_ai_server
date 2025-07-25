@@ -1,0 +1,79 @@
+# Конфигурация AI API Server
+server:
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+
+# Настройки провайдеров
+providers:
+  openai:
+    enabled: false
+    base_url: "https://api.openai.com/v1"
+    fetch_models_dynamically: true
+    
+  gemini:
+    enabled: true
+    fetch_models_dynamically: true
+  
+  cody:
+    enabled: true
+    base_url: "https://cody.su/api/v1"
+    fetch_models_dynamically: true
+  
+  openrouter:
+    enabled: true
+    base_url: "https://openrouter.ai/api/v1"
+    fetch_models_dynamically: true
+
+# Настройки кэширования моделей
+models_cache:
+  enabled: true
+  update_interval_hours: 24  # Обновлять каждые 24 часа
+  cache_file: "data/models_cache.json"
+  force_update_on_startup: false
+
+# Фильтры категорий моделей (дополнительные к константам)
+model_filters:
+  # Дополнительные ключевые слова для существующих категорий
+  image_generation:
+    keywords: ["midjourney", "stable-diffusion", "firefly", "wan", "imagen", "image"]
+    category: "image_generation"
+  
+  audio_generation:
+    keywords: ["music", "sound", "voice-generation"]
+    category: "audio_generation"
+  
+  transcription:
+    keywords: ["speech-to-text", "stt", "voice-to-text"]
+    category: "transcription"
+  
+  vectorization:
+    keywords: ["similarity", "semantic", "vector-search", "embedding"]
+    category: "vectorization"
+
+# Настройки статистики
+statistics:
+  enabled: true
+  database_file: "data/statistics.db"
+  track_usage: true
+  track_response_time: true
+  track_errors: true
+
+# Настройки логирования
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/app.log"
+
+# Настройки безопасности
+security:
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+  rate_limit:
+    requests_per_minute: 60
+
+# Настройки данных
+data:
+  directory: "data"
+  auto_create: true

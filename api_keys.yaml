@@ -1,0 +1,59 @@
+# Конфигурация API ключей для AI провайдеров
+# Поддерживается ротация ключей и управление лимитами
+
+providers:
+  openai:
+    keys:
+      - sk-proj-id1-...
+      - sk-proj-id2-...
+      - sk-proj-id3-...
+    rate_limit_per_minute: 60
+    daily_quota: 10000
+
+  gemini:
+    keys:
+      - AI...
+      - AI..
+    rate_limit_per_minute: 60
+    daily_quota: 15000
+
+  cody:
+    keys:
+      - cody-..
+      - cody-..
+    rate_limit_per_minute: 10  # 10rpm согласно документации
+    daily_quota: 14400  # 10rpm * 60min * 24h
+
+  openrouter:
+    keys:
+      - sk-or-..
+    rate_limit_per_minute: 60
+    daily_quota: 50000
+
+# Настройки ротации ключей
+rotation_settings:
+  # Автоматически переключаться на следующий ключ при ошибке лимита
+  auto_rotate_on_limit: true
+  
+  # Время ожидания перед повторной попыткой с заблокированным ключом (в часах)
+  retry_blocked_key_after_hours: 24
+  
+  # Максимальное количество ошибок перед пометкой ключа как недействительного
+  max_errors_before_disable: 5
+  
+  # Интервал очистки истекших блокировок (в минутах)
+  cleanup_interval_minutes: 60
+
+# Мониторинг ключей
+monitoring:
+  # Отслеживать использование ключей
+  track_usage: true
+  
+  # Уведомления при приближении к лимитам
+  quota_warning_threshold: 0.8  # 80% от лимита
+  
+  # Логировать переключения ключей
+  log_key_rotations: true
+  
+  # Сохранять статистику использования
+  save_usage_stats: true
